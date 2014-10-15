@@ -1,0 +1,35 @@
+<form ng-submit="saveContact()" class="form-inline task-form" role="form">
+  <div class="form-group">
+    <label class="sr-only" for="name"></label>
+    <input ng-model="newContact.name" type="text" class="form-control" id="name" ng-required="true" placeholder="Name">
+  </div>
+    <div class="form-group">
+    <label class="sr-only" for="phone"></label>
+    <input ng-model="newContact.phone" type="text" class="form-control" id="phone" ng-required="true" placeholder="Phone Number">
+  </div>
+<button type="submit" class="btn btn-success"> Save </button>
+</form>
+
+<table  class="table table-striped table-bordered" cellspacing="0" width="100%" >
+  <thead>
+    <tr>
+     <th>Name</th>
+    <th>Phone Number</th>
+    <th>Remove</th>
+    
+    </tr>
+ </thead>
+ <tbody>
+  <tr ng-repeat="contact in contactList | orderByPriority " >
+    <td><div>{{ contact.name }}</div></td> 
+    <td>{{ contact.phone }} </td>
+    <td><i class="glyphicon glyphicon-remove" type="submit" ng-click="contactList.$remove(contact.$id)"></i></td> 
+    
+ </tr>
+ </tbody>	
+</table>
+
+
+
+
+   
