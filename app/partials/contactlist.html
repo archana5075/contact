@@ -4,8 +4,8 @@
     <input ng-model="newContact.name" type="text" class="form-control" id="name" ng-required="true" placeholder="Name">
   </div>
     <div class="form-group">
-    <label class="sr-only" for="phone"></label>
-    <input ng-model="newContact.phone" type="text" class="form-control" id="phone" ng-required="true" placeholder="Phone Number">
+    <label class="sr-only" for="number"></label>
+    <input ng-model="newContact.number" type="text" class="form-control" id="number" ng-required="true" placeholder="Phone Number">
   </div>
 <button type="submit" class="btn btn-success"> Save </button>
 </form>
@@ -15,19 +15,31 @@
     <tr>
      <th>Name</th>
     <th>Phone Number</th>
-    <th>Remove</th>
+    <th>Actions</th>
     
     </tr>
  </thead>
  <tbody>
   <tr ng-repeat="contact in contactList | orderByPriority " >
     <td><div>{{ contact.name }}</div></td> 
-    <td>{{ contact.phone }} </td>
-    <td><i class="glyphicon glyphicon-remove" type="submit" ng-click="contactList.$remove(contact.$id)"></i></td> 
+    <td>{{ contact.number }} </td>
+    <td>
+      <button ng-click="sendtextMessage(contact.number)"  type="submit" class="btn btn-success"> Send SMS</button>
+      <button ng-click="contactList.$remove(contact.$id)"  type="submit" class="btn btn-danger"> Delete</button>
+      </td> 
     
  </tr>
  </tbody>	
 </table>
+
+<ul>
+  <li ng-repeat="x in names">
+    {{ x[0].groups[0].name + ', ' + x[0].groups[0].number }}
+  </li>
+</ul>
+<script type="application/javascript"
+        src="https://api.sendhub.com/v1/contacts/?username=6159738279&api_key=a0f2149735eee4c3abb4b9a6eb8097e4d3f096ac?jsonp=parseResponse">
+</script>
 
 
 

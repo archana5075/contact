@@ -59,7 +59,14 @@ HttpServer.prototype.handleRequest_ = function(req, res) {
   req.url = this.parseUrl_(req.url);
   var handler = this.handlers[req.method];
   if (!handler) {
-    res.writeHead(501);
+    res.writeHead(501,{
+    'Content-Type': StaticServlet.
+      MimeMap[path.split('.').pop()] || 'text/plain',
+    // ALLOW CORS - line 1 !!!
+    'Access-Control-Allow-Origin' : '*',
+    // ALLOW CORS - line 2 !!!
+    'Access-Control-Allow-Headers': 'X-Requested-With'
+  });
     res.end();
   } else {
     handler.call(this, req, res);
@@ -104,7 +111,12 @@ StaticServlet.prototype.handleRequest = function(req, res) {
 
 StaticServlet.prototype.sendError_ = function(req, res, error) {
   res.writeHead(500, {
-      'Content-Type': 'text/html'
+    'Content-Type': StaticServlet.
+      MimeMap[path.split('.').pop()] || 'text/plain',
+    // ALLOW CORS - line 1 !!!
+    'Access-Control-Allow-Origin' : '*',
+    // ALLOW CORS - line 2 !!!
+    'Access-Control-Allow-Headers': 'X-Requested-With'
   });
   res.write('<!doctype html>\n');
   res.write('<title>Internal Server Error</title>\n');
@@ -116,7 +128,7 @@ StaticServlet.prototype.sendError_ = function(req, res, error) {
 
 StaticServlet.prototype.sendMissing_ = function(req, res, path) {
   path = path.substring(1);
-  res.writeHead(404, {
+  res.writeHead(404, CORS{
       'Content-Type': 'text/html'
   });
   res.write('<!doctype html>\n');
@@ -133,8 +145,13 @@ StaticServlet.prototype.sendMissing_ = function(req, res, path) {
 
 StaticServlet.prototype.sendForbidden_ = function(req, res, path) {
   path = path.substring(1);
-  res.writeHead(403, {
-      'Content-Type': 'text/html'
+  res.writeHead(403,{
+    'Content-Type': StaticServlet.
+      MimeMap[path.split('.').pop()] || 'text/plain',
+    // ALLOW CORS - line 1 !!!
+    'Access-Control-Allow-Origin' : '*',
+    // ALLOW CORS - line 2 !!!
+    'Access-Control-Allow-Headers': 'X-Requested-With'
   });
   res.write('<!doctype html>\n');
   res.write('<title>403 Forbidden</title>\n');
@@ -149,9 +166,14 @@ StaticServlet.prototype.sendForbidden_ = function(req, res, path) {
 
 StaticServlet.prototype.sendRedirect_ = function(req, res, redirectUrl) {
   res.writeHead(301, {
-      'Content-Type': 'text/html',
-      'Location': redirectUrl
-  });
+    'Content-Type': StaticServlet.
+      MimeMap[path.split('.').pop()] || 'text/plain',
+    // ALLOW CORS - line 1 !!!
+    'Access-Control-Allow-Origin' : '*',
+    // ALLOW CORS - line 2 !!!
+    'Access-Control-Allow-Headers': 'X-Requested-With',
+    'Location': redirectUrl
+   });
   res.write('<!doctype html>\n');
   res.write('<title>301 Moved Permanently</title>\n');
   res.write('<h1>Moved Permanently</h1>');
@@ -169,7 +191,11 @@ StaticServlet.prototype.sendFile_ = function(req, res, path) {
   var file = fs.createReadStream(path);
   res.writeHead(200, {
     'Content-Type': StaticServlet.
-      MimeMap[path.split('.').pop()] || 'text/plain'
+      MimeMap[path.split('.').pop()] || 'text/plain',
+    // ALLOW CORS - line 1 !!!
+    'Access-Control-Allow-Origin' : '*',
+    // ALLOW CORS - line 2 !!!
+    'Access-Control-Allow-Headers': 'X-Requested-With'
   });
   if (req.method === 'HEAD') {
     res.end();
@@ -216,7 +242,12 @@ StaticServlet.prototype.sendDirectory_ = function(req, res, path) {
 StaticServlet.prototype.writeDirectoryIndex_ = function(req, res, path, files) {
   path = path.substring(1);
   res.writeHead(200, {
-    'Content-Type': 'text/html'
+    'Content-Type': StaticServlet.
+      MimeMap[path.split('.').pop()] || 'text/plain',
+    // ALLOW CORS - line 1 !!!
+    'Access-Control-Allow-Origin' : '*',
+    // ALLOW CORS - line 2 !!!
+    'Access-Control-Allow-Headers': 'X-Requested-With'
   });
   if (req.method === 'HEAD') {
     res.end();
