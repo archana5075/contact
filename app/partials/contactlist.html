@@ -1,4 +1,4 @@
-<form ng-submit="saveContact()" class="form-inline task-form" role="form">
+<form ng-submit="addContact()" class="form-inline task-form" role="form">
   <div class="form-group">
     <label class="sr-only" for="name"></label>
     <input ng-model="newContact.name" type="text" class="form-control" id="name" ng-required="true" placeholder="Name">
@@ -15,33 +15,19 @@
     <tr>
      <th>Name</th>
     <th>Phone Number</th>
-    <th>Actions</th>
-    
-    </tr>
+   </tr>
  </thead>
  <tbody>
-  <tr ng-repeat="contact in contactList | orderByPriority " >
+  <tr ng-repeat="contact in contactList" | orderByPriority >
     <td><div>{{ contact.name }}</div></td> 
     <td>{{ contact.number }} </td>
-    <td>
+    <!-- <td>
       <button ng-click="sendtextMessage(contact.number)"  type="submit" class="btn btn-success"> Send SMS</button>
       <button ng-click="contactList.$remove(contact.$id)"  type="submit" class="btn btn-danger"> Delete</button>
-      </td> 
-    
+      </td>  -->
  </tr>
- </tbody>	
+ </tbody> 
 </table>
-
-<ul>
-  <li ng-repeat="x in names">
-    {{ x[0].groups[0].name + ', ' + x[0].groups[0].number }}
-  </li>
-</ul>
-<script type="application/javascript"
-        src="https://api.sendhub.com/v1/contacts/?username=6159738279&api_key=a0f2149735eee4c3abb4b9a6eb8097e4d3f096ac?jsonp=parseResponse">
-</script>
-
-
 
 
    
